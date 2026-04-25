@@ -1,9 +1,10 @@
 const express = require('express')
+const bcrypt = require('bcryptjs')
 const { db } = require('../db')
 
 const router = express.Router()
 
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
   const { email, username, password } = req.body
   if (!email || !username || !password) {
     return res.status(400).json({ error: 'All fields are required' })
@@ -15,8 +16,9 @@ router.post('/register', (req, res) => {
     return res.status(400).json({ error: 'Invalid email address' })
   }
   try {
+    const hash = await bcrypt.hash(password, 10)
     const stmt = db.prepare('INSERT INTO users (email, username, password_hash) VALUES (?, ?, ?)')
-    const result = stmt.run(email, username, password)
+    const result = stmt.run(email, username, hash)
     res.status(201).json({ id: result.lastInsertRowid, username })
   } catch (err) {
     res.status(400).json({ error: err.message })
