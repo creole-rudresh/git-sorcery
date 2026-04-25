@@ -15,6 +15,10 @@ router.post('/register', async (req, res) => {
   if (!email.includes('@')) {
     return res.status(400).json({ error: 'Invalid email address' })
   }
+  const existing = db.prepare('SELECT id FROM users WHERE email = ?').get(email)
+  if (existing) {
+    return res.status(409).json({ error: 'Email already registered' })
+  }
   try {
     const hash = await bcrypt.hash(password, 10)
     const stmt = db.prepare('INSERT INTO users (email, username, password_hash) VALUES (?, ?, ?)')
