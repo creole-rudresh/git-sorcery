@@ -22,4 +22,12 @@ router.post('/save', (req, res) => {
   res.status(201).json({ id: result.lastInsertRowid, city })
 })
 
+router.delete('/:id', (req, res) => {
+  const result = db.prepare(
+    'DELETE FROM weather_history WHERE id = ? AND user_id = ?'
+  ).run(req.params.id, req.user.userId)
+  if (result.changes === 0) return res.status(404).json({ error: 'Record not found' })
+  res.json({ success: true })
+})
+
 module.exports = router
