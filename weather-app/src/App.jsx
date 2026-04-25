@@ -2,6 +2,7 @@ import { useState } from 'react'
 import WeatherTable from './components/WeatherTable'
 import Login from './components/Login'
 import Register from './components/Register'
+import WeatherHistory from './components/WeatherHistory'
 import { useAuth } from './context/AuthContext'
 import './App.css'
 import './auth.css'
@@ -76,7 +77,14 @@ function App() {
         <button type="submit" className="search-btn">Search</button>
       </form>
 
-      <WeatherTable city={city} />
+      <div className="main-layout">
+        <div className="weather-main">
+          <WeatherTable city={city} />
+        </div>
+        <aside className="history-sidebar">
+          <WeatherHistory onSelect={(c) => { setInput(c); setCity(c) }} />
+        </aside>
+      </div>
     </div>
   )
 }
