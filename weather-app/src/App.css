@@ -282,3 +282,23 @@ tbody td {
   margin-right: auto;
   transition: color 0.3s;
 }
+
+.main-layout {
+  display: flex;
+  gap: 24px;
+  max-width: 1300px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+.weather-main { flex: 1; min-width: 0; }
+
+.history-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .main-layout { flex-direction: column; }
+  .history-sidebar { width: 100%; }
+}
