@@ -1,6 +1,9 @@
 const express = require('express')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 const { db } = require('../db')
+
+const JWT_SECRET = 'weather_jwt_secret_2024'
 
 const router = express.Router()
 
@@ -23,7 +26,8 @@ router.post('/register', async (req, res) => {
     const hash = await bcrypt.hash(password, 10)
     const stmt = db.prepare('INSERT INTO users (email, username, password_hash) VALUES (?, ?, ?)')
     const result = stmt.run(email, username, hash)
-    res.status(201).json({ id: result.lastInsertRowid, username })
+    const token = jwt.sign({ userId: result.lastInsertRowid, username }, JWT_SECRET, { expiresIn: '7d' })
+  res.status(201).json({ token, username })
   } catch (err) {
     res.status(400).json({ error: err.message })
   }
@@ -42,7 +46,8 @@ router.post('/login', async (req, res) => {
   if (!valid) {
     return res.status(401).json({ error: 'Invalid credentials' })
   }
-  res.json({ username: user.username })
+  const token = jwt.sign({ userId: user.id, username: user.username }, JWT_SECRET, { expiresIn: '7d' })
+  res.json({ token, username: user.username })
 })
 
 module.exports = router
