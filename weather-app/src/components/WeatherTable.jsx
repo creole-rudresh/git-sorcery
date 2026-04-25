@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { useAuth } from '../context/AuthContext'
+import api from '../api'
 
 const WMO_CODES = {
   0: { label: 'Clear Sky', icon: '☀️' },
@@ -69,6 +71,7 @@ async function fetchWeather(lat, lon) {
 }
 
 export default function WeatherTable({ city }) {
+  const { user } = useAuth()
   const [rows, setRows] = useState([])
   const [location, setLocation] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -84,6 +87,9 @@ export default function WeatherTable({ city }) {
     geocode(city)
       .then(({ latitude, longitude, name, country }) => {
         setLocation({ name, country })
+        if (user) {
+          api.post('/history/save', { city: name, country, latitude, longitude }).catch(() => {})
+        }
         return fetchWeather(latitude, longitude)
       })
       .then((data) => {
