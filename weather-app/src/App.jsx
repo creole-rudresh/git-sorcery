@@ -4,6 +4,12 @@ import Login from './components/Login'
 import Register from './components/Register'
 import { useAuth } from './context/AuthContext'
 import './App.css'
+import './auth.css'
+
+function LogoutBtn() {
+  const { logout } = useAuth()
+  return <button className="logout-btn" onClick={logout}>Sign Out</button>
+}
 
 function App() {
   const { user } = useAuth()
@@ -53,6 +59,11 @@ function App() {
         </div>
         <p className="subtitle">7-Day Forecast powered by Open-Meteo &amp; Geocoding API</p>
       </header>
+
+      <div className="user-bar">
+        <span className="user-greeting">👋 Welcome, <strong>{user.username}</strong></span>
+        <LogoutBtn />
+      </div>
 
       <form className="search-form" onSubmit={handleSearch}>
         <input
