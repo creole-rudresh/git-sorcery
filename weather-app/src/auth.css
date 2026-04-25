@@ -125,3 +125,89 @@
   border-color: #ef9a9a;
   color: #ef9a9a;
 }
+
+.history-panel {
+  background: var(--surface, rgba(255,255,255,0.05));
+  border: 1px solid var(--border, rgba(255,255,255,0.1));
+  border-radius: 12px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.history-panel h3 {
+  color: var(--accent, #4fc3f7);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+
+.history-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.history-city-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: background 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.history-city-btn:hover {
+  background: var(--surface-hover, rgba(255,255,255,0.08));
+}
+
+.history-city {
+  color: var(--text-h, #fff);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.history-country {
+  color: var(--text-muted, #a0b4cc);
+  font-size: 0.75rem;
+}
+
+.history-date {
+  color: var(--text-footer, #556677);
+  font-size: 0.72rem;
+}
+
+.history-delete-btn {
+  background: none;
+  border: none;
+  color: var(--text-footer, #556677);
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: color 0.15s;
+  flex-shrink: 0;
+}
+
+.history-delete-btn:hover { color: #ef9a9a; }
+
+.history-loading,
+.history-empty {
+  color: var(--text-muted, #a0b4cc);
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 16px 0;
+}
