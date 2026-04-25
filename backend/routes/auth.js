@@ -29,4 +29,16 @@ router.post('/register', async (req, res) => {
   }
 })
 
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Email and password are required' })
+  }
+  const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email)
+  if (!user) {
+    return res.status(401).json({ error: 'Invalid credentials' })
+  }
+  res.json({ message: 'login stub' })
+})
+
 module.exports = router
