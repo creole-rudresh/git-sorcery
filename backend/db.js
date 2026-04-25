@@ -13,7 +13,19 @@ function initDB() {
       created_at TEXT DEFAULT (datetime('now'))
     )
   `)
-  console.log('Users table ready')
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS weather_history (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      city TEXT NOT NULL,
+      country TEXT,
+      latitude REAL,
+      longitude REAL,
+      searched_at TEXT DEFAULT (datetime('now')),
+      FOREIGN KEY (user_id) REFERENCES users(id)
+    )
+  `)
+  console.log('Database tables ready')
 }
 
 module.exports = { db, initDB }
