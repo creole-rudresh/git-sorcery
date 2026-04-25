@@ -1,7 +1,11 @@
 const Database = require('better-sqlite3')
 const path = require('path')
 
-const db = new Database(path.join(__dirname, 'weather.db'))
+const dbPath = process.env.NODE_ENV === 'test'
+  ? ':memory:'
+  : path.join(__dirname, 'weather.db')
+
+const db = new Database(dbPath)
 
 function initDB() {
   db.exec(`
@@ -25,7 +29,14 @@ function initDB() {
       FOREIGN KEY (user_id) REFERENCES users(id)
     )
   `)
-  console.log('Database tables ready')
+  if (process.env.NODE_ENV !== 'test') {
+    console.log('Database tables ready')
+  }
 }
 
-module.exports = { db, initDB }
+function clearDB() {
+  db.exec('DELETE FROM weather_history')
+  db.exec('DELETE FROM users')
+}
+
+module.exports = { db, initDB, clearDB }
