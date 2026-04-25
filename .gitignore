@@ -3,3 +3,4 @@ weather-app/dist/
 backend/node_modules/
 backend/weather.db
 *.db
+bisect-test.sh
