@@ -12,6 +12,12 @@ export default function Register({ onSwitch }) {
   async function handleSubmit(e) {
     e.preventDefault()
     setError('')
+    if (username.trim().length < 2) {
+      return setError('Username must be at least 2 characters')
+    }
+    if (password.length < 6) {
+      return setError('Password must be at least 6 characters')
+    }
     setLoading(true)
     try {
       await register(email, username, password)
