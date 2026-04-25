@@ -41,6 +41,7 @@ export default function Login({ onSwitch }) {
         />
         {error && <p className="auth-error">{error}</p>}
         <button type="submit" disabled={loading}>
+          {loading && <span className="auth-spinner" />}
           {loading ? 'Signing in…' : 'Sign In'}
         </button>
       </form>

@@ -49,6 +49,7 @@ export default function Register({ onSwitch }) {
         />
         {error && <p className="auth-error">{error}</p>}
         <button type="submit" disabled={loading}>
+          {loading && <span className="auth-spinner" />}
           {loading ? 'Creating account…' : 'Register'}
         </button>
       </form>
